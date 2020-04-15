@@ -8,13 +8,13 @@
 - Default port is `54321` but you can change the port
 - After opening the `Chat Room` window , press `Try` button to connect
 # To Run The App :
-- Server Side : 
+# Server Side : 
 - 1)Open `ServerGUI.py` and enter IP and port number, press `Start` for listening
 - ![Screenshot](images/server_img1.png) 
 - 2)Then start `ClientGUI.py` , connect the clients and you can see them in clients list 
 - ![Screenshot](images/server_img2.png) 
 
-- Client side :
+# Client side :
 - 1)Enter the information (no need for password just fill it with a character)
 - 2)Press `Connect`
 - ![Screenshot](images/client_img1_connect_box.png)
