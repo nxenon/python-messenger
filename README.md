@@ -1,4 +1,4 @@
-# Python multi user GUI messenger
+# Python Multi User GUI Messenger
 - GUI messenger app for both server and clients
 # Features :
 - Checking clients messages from server `Shell`
