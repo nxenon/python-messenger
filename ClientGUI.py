@@ -115,7 +115,7 @@ class ChatGui():
             if try_to_connect_or_not == True:
                 self.chat_win = Tk()
                 self.chat_win.title("Chat Room")
-                self.chat_win.geometry("610x780")
+                self.chat_win.geometry("610x700")
                 self.chat_win.resizable(0,0)
                 chat_win_user_label = Label(self.chat_win, text=("Your name : " + username), font=("Tahoma", "15"))
                 chat_win_user_label.pack()
@@ -131,7 +131,7 @@ class ChatGui():
 
                 self.chat_room_text_box = Text(self.chat_win)
                 self.chat_room_text_box.pack()
-                self.chat_room_text_box.config(width="70", height="35", bg="#FFEFDF",state = "disabled")
+                self.chat_room_text_box.config(width="70", height="28", bg="#FFEFDF",state = "disabled")
                 chat_rooms_separate_text_box = Text(self.chat_win)
                 chat_rooms_separate_text_box.pack()
                 chat_rooms_separate_text_box.config(width = 70 ,height = "0",bg = "#E6E6E6",state="disabled")
