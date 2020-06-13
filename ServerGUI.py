@@ -1,3 +1,4 @@
+#!/bin/python3
 __author__ = "KhodeXenon"
 __email__ = "KhodeXenon@gmail.com"
 
