@@ -22,7 +22,7 @@ class ServerManager():
         self.main_win = main_win
         self.main_win.title("Messenger (Server)")
         self.main_win.geometry("500x555")
-        self.main_win.resizable(0, 0)
+        self.main_win.resizable(1, 1)
         self.server_ip_label = Label(self.main_win,font=("Tahoma",15),text="Server IP")
         self.server_ip_label.pack()
         self.server_ip_entry = Entry(self.main_win,font=("Tahoma",15))
@@ -109,7 +109,8 @@ class ServerManager():
                 print(data.decode())
                 if not data : break
                 if data == b"quit": break
-                client_msg = data
+                client_msg = data.decode().strip()
+                client_msg = client_msg.encode()
                 for c in self.clients_list :
                     if c != client :
                         c.sendall(client_msg)

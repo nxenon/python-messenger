@@ -116,8 +116,8 @@ class ChatGui():
             if try_to_connect_or_not == True:
                 self.chat_win = Tk()
                 self.chat_win.title("Chat Room")
-                self.chat_win.geometry("610x700")
-                self.chat_win.resizable(0,0)
+                self.chat_win.geometry("610x820")
+                self.chat_win.resizable(1,1)
                 chat_win_user_label = Label(self.chat_win, text=("Your name : " + username), font=("Tahoma", "15"))
                 chat_win_user_label.pack()
 
@@ -180,8 +180,8 @@ class ChatGui():
         new_message = self.send_message_text_box.get("1.0",END)
         if (len(new_message.strip()) >= 1) and (len(new_message.strip()) <= 100) :
 
-            local_message = "You->" + new_message
-            final_message = username + "->" + new_message
+            local_message = "You->" + new_message.strip()
+            final_message = username + "->" + new_message.strip()
             self.chat_room_text_box.config(state="normal")
             self.chat_room_text_box.insert(END,local_message + "\n")
             self.chat_room_text_box.config(state="disabled")
