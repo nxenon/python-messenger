@@ -1,5 +1,5 @@
-#!/bin/python3
-__author__ = "KhodeXenon"
+#!/usr/bin/python3
+__author__ = "xenon-xenon"
 __email__ = "KhodeXenon@gmail.com"
 
 import tkinter as tk

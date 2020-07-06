@@ -1,5 +1,5 @@
-#!/bin/python3
-__author__ = "KhodeXenon"
+#!/usr/bin/python3
+__author__ = "xenon-xenon"
 __email__ = "KhodeXenon@gmail.com"
 
 import tkinter as tk
@@ -182,7 +182,7 @@ class ChatGui():
 
             local_message = "You->" + new_message.strip()
             final_message = username + "->" + new_message.strip()
-            self.chat_room_text_box.config(state="normal")
+            self.chat_room_text_box.config(state="normal",fg="Black")
             self.chat_room_text_box.insert(END,local_message + "\n")
             self.chat_room_text_box.config(state="disabled")
             try:
