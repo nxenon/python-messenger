@@ -47,9 +47,9 @@ class LoginGui():
         self.default_port_check_button.config(fg="Green")
         self.default_port_check_button.grid(row=3 , column = 1)
 
-        self.connect_button = Button(main_win, text="Connect", font=("Tahoma", 17), command = self.create_chat_gui)
-        self.connect_button.config(activeforeground="Blue",activebackground="White")
-        self.connect_button.grid(row=3, column=3)
+        self.set_button = Button(main_win, text="   Set   ", font=("Tahoma", 17), command = self.create_chat_gui)
+        self.set_button.config(activeforeground="Blue",activebackground="White")
+        self.set_button.grid(row=3, column=3)
 
     #create a function for connect button
     def create_chat_gui(self):
@@ -127,8 +127,8 @@ class ChatGui():
                 if server_status is None:
                     self.chat_server_connection_status.config(text=("Server status : Not connected"), font=("Tahoma", "15"),fg="Red")
 
-                self.try_button = Button(self.chat_win, text="Try", font=("Tahoma", 15),command = self.connect_to_server)
-                self.try_button.pack()
+                self.connect_button = Button(self.chat_win, text="Connect", font=("Tahoma", 15),command = self.connect_to_server)
+                self.connect_button.pack()
 
                 self.chat_room_text_box = Text(self.chat_win)
                 self.chat_room_text_box.pack()
@@ -154,7 +154,7 @@ class ChatGui():
         except :
             messagebox.showerror("Error", "Connection failed")
         else:
-            self.try_button.config(state = "disabled")
+            self.connect_button.config(state = "disabled")
             self.send_message_text_box.config(state="normal")
             self.send_message_button.config(state="normal")
             self.chat_server_connection_status.config(text=("Server status : Connected"), font=("Tahoma", "15"),fg="Green")
@@ -172,7 +172,7 @@ class ChatGui():
             except ConnectionResetError :
                 messagebox.showerror("Error","Connection closed !")
                 self.chat_server_connection_status.config(text=("Server status : Not connected"), font=("Tahoma", "15"),fg="Red")
-                self.try_button.config(state="normal")
+                self.connect_button.config(state="normal")
                 break
 
     # send mesage function
@@ -189,7 +189,7 @@ class ChatGui():
                 self.client_socket.sendall(final_message.encode())
             except ConnectionResetError :
                 messagebox.showerror("Connection error","Connection is closed !")
-                self.try_button.config(state="normal")
+                self.connect_button.config(state="normal")
                 self.chat_server_connection_status.config(text=("Server status : Not connected"), font=("Tahoma", "15"),fg="Red")
             else:
                 self.send_message_text_box.delete("1.0", END)
