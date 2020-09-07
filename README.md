@@ -2,19 +2,25 @@
 - GUI messenger app for both server and clients
 # Features :
 - Checking clients messages from server `Shell`
-- Checking connected clients
+- Displaying connected clients
+- Send server and client signal for cheking connection between them
+- Password authentication `(optional)`
 # Note 
-- There is no need for `password` in client app just fill the password with a character
 - Default port is `54321` but you can change the port
-- After opening the `Chat Room` window , press `Try` button to connect
+- After opening the `Chat Room` window , press `Connect` button for trying to connect to the server
+- Usernames and passwords are `case-sensitive` !
+# When Authentication Is Enabled
+- Usernames and paaswords are stored in `creds.txt` file you can add or remove users .
+- By default there are 2 usernames : test and test2 (you can remove them)
 # To Run The App :
 # Server Side : 
 - 1)Open `ServerGUI.py` and enter IP and port number, press `Start` for listening
 - 2)Then start `ClientGUI.py` , connect the clients and you can see them in clients list 
 - ![Screenshot](images/server_img1.png) 
 
-# Client side :
-- 1)Enter the information (no need for password just fill it with a character)
+# Client Side :
+- 1)Enter the information (password authentication is `optional`)
+- If you want use password check the `authentication enabled` check box
 - 2)Press `Set`
 - ![Screenshot](images/client_img1_connect_box.png)
 - 3)Press `Connect` to connect to the server
