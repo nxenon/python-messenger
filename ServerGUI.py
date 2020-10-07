@@ -13,12 +13,15 @@ import socket
 import threading
 from threading import Thread
 from time import sleep
+import datetime
+import os
 
 connection_status = None # for detecting the server status , 1 is listening , 0 is not listening
 
 # class for managing server and connections
 class ServerManager():
     def __init__(self,main_win):
+        self.app_version = 'V2.1'
         self.authentication_enabled = False # authentication is disabled by default
 
         # regex for getting users and their password from creds.txt file and when getting users and passwords from client
@@ -66,6 +69,9 @@ class ServerManager():
         self.client_list_text_box = Text(self.main_win)
         self.client_list_text_box.pack()
         self.client_list_text_box.config(height = '13',width = '40',state = 'disabled',font = ('Tahoma',15))
+
+        self.create_log_folder_content() # for creating banner for log files
+        self.check_log_dir() # check if log folder and log files exist if they don't exist they will be created
 
     def change_authentication_status_entry(self):
         '''function for changing authentication mode'''
@@ -157,21 +163,25 @@ class ServerManager():
                         else:
                             self.client_connection.sendall(b'invalid credentials')
                             self.client_connection.close()
+                            self.save_connections_logs('unknown user', client_ip[0], 'Invalid credential format','connection failed')
                             continue
                 else:
                     self.client_connection.sendall(b'invalid credentials')
                     self.client_connection.close()
+                    self.save_connections_logs('unknown user', client_ip[0], 'invalid credential format','connection failed')
                     continue
 
                 check_client = self.authenticate_client(client_name,client_pass)
+
                 if check_client == 'valid credentials':
                     self.clients_name.append(client_name)
                     self.update_clinets_list_display()
                     self.client_connection.sendall(b'valid credentials') # send ACK for client(valid ack)
+                    self.save_connections_logs(client_name, client_ip[0], check_client, 'connection successful')
                     for c in self.clients_list:
                         if c != self.client_connection:
                             c.sendall(client_name.encode() + b" joined") # send message to other client when a user joins
-                    new_client_msg = "New client -> Name :" + client_name + ", IP : " + client_ip[0]
+                    new_client_msg = "New client -> Name : " + client_name + ", IP : " + client_ip[0]
                     print(new_client_msg)
                     self.clients_num += 1
                     self.clients_list.append(self.client_connection)
@@ -179,11 +189,12 @@ class ServerManager():
                     print("Number of clients : " + str(self.clients_num))
 
                     Thread(target=self.send_recv_clients_msg, args=(self.client_connection, client_name, client_ip[0],)).start()
-                    Thread(target=self.send_server_signal, args=(self.client_connection, client_name,)).start()
+                    Thread(target=self.send_server_signal, args=(self.client_connection,client_name,client_ip,)).start()
 
                 elif check_client == 'invalid credentials':
                     self.client_connection.sendall(b'invalid credentials') # send ACK for client(invalid ack)
                     self.client_connection.close()
+                    self.save_connections_logs(client_name, client_ip[0], check_client, 'connection failed')
                     continue
             except OSError: # if you stop listening it will raise an OSError because of waiting time for accepting connection
                 pass
@@ -196,6 +207,8 @@ class ServerManager():
                         self.clients_name.remove(client_name)
                 except:
                     pass
+                else:
+                    self.save_connections_logs(client_name, client_ip[0], "-", 'connection closed')
 
     def send_recv_clients_msg(self, client_connection, client_name, client_ip):
         '''function for receive and send client messages'''
@@ -206,7 +219,8 @@ class ServerManager():
         try:
             while True:
                 data = client.recv(4096)
-                print(data.decode())
+                if data.decode() != 'client signal': # clients signal won't be showed in server shell
+                    print(data.decode())
                 if not data: break
                 if data == b'quit': break
                 client_msg = data.decode().strip()
@@ -221,11 +235,12 @@ class ServerManager():
                 self.clients_list.remove(client) # remove client socket from clients sockets list
             if client_name in self.clients_name:
                 self.clients_name.remove(client_name)  # remove client name from clients names list
+                self.save_connections_logs(client_name, client_ip, "-", 'connection closed')
             self.update_clinets_list_display() # updating clients displaying box
             for c in self.clients_list:
                 c.sendall(client_name.encode() + b' left')
 
-    def send_server_signal(self,client_connection,client_name):
+    def send_server_signal(self,client_connection,client_name,client_ip):
         '''function for sending signal to clients for checking connection between client and server'''
 
         while True:
@@ -237,6 +252,7 @@ class ServerManager():
                 print('Connection is closed ! --> client name :' + client_name)
                 if client_connection in self.clients_list :
                     self.clients_list.remove(client_connection) # remove client socket from clients sockets list
+                    self.save_connections_logs(client_name, client_ip[0], "-", 'connection closed')
                 if client_name in self.clients_name :
                     self.clients_name.remove(client_name) # remove client name from clients names list
 
@@ -258,6 +274,39 @@ class ServerManager():
         for client_name in self.clients_name:
             self.client_list_text_box.insert(tk.END, client_name + '\n')
         self.client_list_text_box.config(state='disabled')
+
+    def check_log_dir(self):
+        '''This function checks if logs folder and other log files exist'''
+
+        if os.path.exists('logs') :
+            if os.path.exists('logs/connections.log'):
+                pass
+            else:
+                with open('logs/connections.log','w') as file :
+                    file.write(self.main_log_text)
+        else:
+            os.mkdir('logs')
+            self.check_log_dir()
+
+    def create_log_folder_content(self):
+        '''This functions is for create banners for log files'''
+
+        version_in_log = 'Server version : ' + self.app_version
+        log_info_connections_log = '''This file (connections.log) contains client connections logs :
+
+        usernames ,client IPs who has connected and authentication attempts (failed or successful)
+                '''
+        self.main_log_text = log_info_connections_log + '\n' + version_in_log + '\n'  # banner of the log file
+
+    def save_connections_logs(self,username,ip,auth_status,connection_status):
+        '''This function is for saving logs ---> logs/*.log'''
+
+        time_now = datetime.datetime.now() # time in log
+        time_now_formatted = time_now.strftime('%Y-%m-%d %H:%M:%S')
+
+        event =  time_now_formatted + '| ' + username + '| ' + ip + '| ' + auth_status + '| ' + connection_status + '\n'
+        with open('logs/connections.log','a') as file :
+            file.write(event)
 
     def server_stop_to_listening(self):
         '''

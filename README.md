@@ -4,6 +4,8 @@
 - Checking clients messages from server `Shell`
 - Displaying connected clients
 - Send server and client signal for cheking connection between them
+- The server logs client `connections status and attempts` in `logs/connections.log`
+- The log file will be created after you execute the ServerGUI.py
 - Password authentication `(optional)`
 # Note 
 - Default port is `54321` but you can change the port

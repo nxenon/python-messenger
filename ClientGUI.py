@@ -18,6 +18,7 @@ server_status = None # connection status with the server
 #class for login GUI
 class LoginGui():
     def __init__(self, main_win): # main_win = tk.Tk()
+        self.app_version = 'V2.1'
         # define GUI options
         self.chat_win_exist = None # If chat window exists it won't be None
         self.main_win = main_win # main window for login
