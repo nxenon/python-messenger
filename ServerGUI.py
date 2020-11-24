@@ -118,10 +118,7 @@ class ServerManager():
         except ValueError:
             messagebox.showerror('Error', 'You must enter integer in port field e.g. (54321)')
         else:
-            if len(self.server_ip) >= 7:
-                self.server_start_to_listening()
-            else:
-                messagebox.showerror('Error', 'Wrong ip address !')
+            self.server_start_to_listening()
 
     def server_start_to_listening(self):
         '''function for start listening'''
