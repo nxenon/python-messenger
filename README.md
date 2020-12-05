@@ -18,13 +18,13 @@
 # Server Side : 
 - 1)Open `ServerGUI.py` and enter IP and port number, press `Start` for listening
 - 2)Then start `ClientGUI.py` , connect the clients and you can see them in clients list 
-- ![Screenshot](images/server_img1.png) 
+- ![Screenshot](https://user-images.githubusercontent.com/61124903/101241546-3a2b8d00-370c-11eb-8d3e-90e3622f61db.png) 
 
 # Client Side :
 - 1)Enter the information (password authentication is `optional`)
 - If you want use password check the `authentication enabled` check box
 - 2)Press `Set`
-- ![Screenshot](images/client_img1_connect_box.png)
+- ![Screenshot](https://user-images.githubusercontent.com/61124903/101241532-1ff1af00-370c-11eb-94f6-e36a50dc846b.png)
 - 3)Press `Connect` to connect to the server
 - 4)Then you can send and receive messages from connected clients
-- ![Screenshot](images/client_img2_connect_guide.png)
+- ![Screenshot](https://user-images.githubusercontent.com/61124903/101241548-47e11280-370c-11eb-8745-21dfa7892587.png)
