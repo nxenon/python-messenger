@@ -1,10 +1,6 @@
 # Python Multi User GUI Messenger
 - GUI messenger app for both server and clients
 
-Youtube Video
-----
-[![Youtube Video](https://user-images.githubusercontent.com/61124903/101241548-47e11280-370c-11eb-8745-21dfa7892587.png)](https://youtu.be/Bx2A4IP7wA8)
-
 # Features :
 - Checking clients messages from server `Shell`
 - Displaying connected clients
