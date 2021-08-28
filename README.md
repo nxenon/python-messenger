@@ -1,4 +1,10 @@
 # Python Multi User GUI Messenger
+
+[![Tool Category](https://badgen.net/badge/Tool/Messenger/black)](https://github.com/nxenon/python-messenger)
+[![APP Version](https://badgen.net/badge/Version/v2.1.1/red)](https://github.com/nxenon/python-messenger)
+[![Python Version](https://badgen.net/badge/Python/3.x/blue)](https://www.python.org/download/releases/3.0/)
+[![License](https://badgen.net/badge/License/GPLv3/purple)](https://github.com/nxenon/python-messenger/blob/master/LICENSE)
+
 - GUI messenger app for both server and clients
 
 # Features :
